@@ -76,12 +76,12 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['message'],'Resource not found')
 
     def test_create_question(self):
-        res=self.client().post('/questions', json=self.new_question)
+        res=self.client().post('/questions/search', json=self.new_question)
         data=json.loads(res.data)
         pass
 
     def test_get_question_search_with_results(self):
-        res=self.client().post('/questions',json={'searchTerm':'title'})
+        res=self.client().post('/questions/search',json={'searchTerm':'title'})
         data=json.loads(res.data)
 
         self.assertEqual(res.status_code,200)
@@ -90,7 +90,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertTrue(data['total_questions'])
 
     def test_get_question_search_without_results(self):
-        res=self.client().post('/questions', json={'searchTerm':'helloxgxgxgxgx'})
+        res=self.client().post('/questions/search', json={'searchTerm':'helloxgxgxgxgx'})
         data=json.loads(res.data)
 
         self.assertEqual(res.status_code,200)
@@ -122,7 +122,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertTrue(data['question'])
-        self.assertEqual(data['question']['category'], '6')
+        self.assertEqual(data['question']['category'], 6)
         self.assertNotEqual(data['question']['id'], 66)
 
     def test_play_quiz_fails(self):
